@@ -13,7 +13,7 @@ const ShopDetail: React.FC<Props> = ({ shop }) => {
 
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.image}>
         <Image style={styles.image} source={{ uri: imageUrl }}></Image>
         <LinearGradient
           colors={["transparent", "rgba(0,0,0,0.8)"]}

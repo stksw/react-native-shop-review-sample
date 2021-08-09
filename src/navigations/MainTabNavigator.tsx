@@ -1,7 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import UserScreen from "../screens/UserScreen";
-import HomeStackNavigator from "./HomeStackNavigator";
+import RootStackNavigator from "./HomeStackNavigator";
 import { Feather } from "@expo/vector-icons";
 
 type Props = {};
@@ -9,16 +9,24 @@ type Props = {};
 const Tab = createBottomTabNavigator();
 
 const MainTabNavigator: React.FC<Props> = ({}) => {
+  const tabBarOptions = {
+    activeTintColor: "#900",
+    inactiveTintColor: "#999",
+  };
+
+  // const screenOptions = ({ route }) => {
+  //   tabBarIcon: ({ focused, color, size }) => {
+  //     let iconName;
+  //     if (route.name === "Home") {
+  //     }
+  //   };
+  // };
+
   return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarActiveTintColor: "#900",
-        tabBarInactiveTintColor: "#999",
-      }}
-    >
+    <Tab.Navigator tabBarOptions={tabBarOptions}>
       <Tab.Screen
         name="Home"
-        component={HomeStackNavigator}
+        component={RootStackNavigator}
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size }) => (

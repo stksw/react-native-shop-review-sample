@@ -20,7 +20,6 @@ const CONTAINER_WIDTH = width / 2;
 const IMAGE_WIDTH = CONTAINER_WIDTH - 32;
 
 const ShopReviewItem: React.FC<Props> = ({ shop, onPress }) => {
-  console.log("shop", shop);
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <Image source={{ uri: shop.imageUrl }} style={styles.image} />
