@@ -1,27 +1,33 @@
 import React from "react";
-import { StyleSheet, Text, View, Image, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
 import "firebase/firestore";
 import { Shop } from "../types/shop";
-import { getShops } from "../lib/firebase";
 import Stars from "./Stars";
 
 type Props = {
   shop: Shop;
+  onPress: () => void;
 };
 
 const { width } = Dimensions.get("window");
 const CONTAINER_WIDTH = width / 2;
 const IMAGE_WIDTH = CONTAINER_WIDTH - 32;
 
-const ShopReviewItem: React.FC<Props> = ({ shop }) => {
+const ShopReviewItem: React.FC<Props> = ({ shop, onPress }) => {
   console.log("shop", shop);
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       <Image source={{ uri: shop.imageUrl }} style={styles.image} />
       <Text style={styles.nameText}>{shop.name}</Text>
       <Text style={styles.placeText}>{shop.place}</Text>
       <Stars score={shop.score} />
-    </View>
+    </TouchableOpacity>
   );
 };
 

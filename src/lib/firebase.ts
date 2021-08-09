@@ -20,7 +20,6 @@ export const getShops = async () => {
     const snapshot = await firebase
       .firestore()
       .collection("shops")
-      .where("place", "==", "台東区")
       .orderBy("score", "desc")
       .get();
     const shops = snapshot.docs.map((doc) => doc.data() as Shop);
