@@ -8,7 +8,7 @@ import { Feather } from "@expo/vector-icons";
 
 type Props = {
   onPress: () => void;
-  name: "plus" | "user" | "x";
+  name: "plus" | "user" | "x" | "camera";
   color?: string;
 };
 
@@ -22,6 +22,14 @@ const IconButton: React.FC<Props> = ({ onPress, name, color = "#000" }) => {
 
 const styles = StyleSheet.create({
   container: {
+    margin: 8,
+  },
+  photoContainer: {
+    margin: 8,
+  },
+  image: {
+    width: 100,
+    height: 100,
     margin: 8,
   },
 });
