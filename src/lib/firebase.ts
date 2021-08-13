@@ -1,17 +1,12 @@
+import Constants from "expo-constants";
 import firebase from "firebase/app";
 import "firebase/firestore";
+import "firebase/auth";
 import { Shop } from "../types/shop";
+import { User, initialUser } from "../types/user";
 
 if (!firebase.apps.length) {
-  const firebaseConfig = {
-    apiKey: "AIzaSyA3BZF30TiDPY4OLeGecB_8TkPbMuvCRFc",
-    authDomain: "shop-review-dev.firebaseapp.com",
-    projectId: "shop-review-dev",
-    storageBucket: "shop-review-dev.appspot.com",
-    messagingSenderId: "736108519658",
-    appId: "1:736108519658:web:fb0d1a6e473b9853d8f793",
-  };
-  firebase.initializeApp(firebaseConfig);
+  firebase.initializeApp(Constants.manifest!.extra!.firebase);
 }
 
 export const getShops = async () => {
@@ -26,5 +21,19 @@ export const getShops = async () => {
     return shops;
   } catch (err) {
     console.log("err", err);
+  }
+};
+
+export const signIn = async () => {
+  const credentials = await firebase.auth().signInAnonymously();
+
+  const uid = credentials.user?.uid;
+  const userDoc = await firebase.firestore().collection("users").doc(uid).get();
+  if (uid && !userDoc.exists) {
+    await firebase.firestore().collection("users").doc(uid).set(initialUser);
+    // firebaseから取得したuserDocの中にはidがない
+    return { ...initialUser, id: uid };
+  } else {
+    return { ...userDoc.data(), id: uid } as User;
   }
 };
