@@ -5,7 +5,7 @@ import { AuthScreen } from "../screens/AuthScreen";
 import { UserContext } from "../contexts/userContext";
 
 export const AppNavigator = () => {
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   return (
     <NavigationContainer>

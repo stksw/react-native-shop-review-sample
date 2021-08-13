@@ -29,11 +29,17 @@ export const signIn = async () => {
 
   const uid = credentials.user?.uid;
   const userDoc = await firebase.firestore().collection("users").doc(uid).get();
-  if (uid && !userDoc.exists) {
+  console.log("uid", uid);
+  if (!uid || !userDoc.exists) {
     await firebase.firestore().collection("users").doc(uid).set(initialUser);
     // firebaseから取得したuserDocの中にはidがない
-    return { ...initialUser, id: uid };
+    return { ...initialUser, id: uid } as User;
   } else {
-    return { ...userDoc.data(), id: uid } as User;
+    return { id: uid, ...userDoc.data() } as User;
   }
+};
+
+export const updateUser = async (userId: string, params: any) => {
+  console.log("params", params);
+  await firebase.firestore().collection("users").doc(userId).update(params);
 };
