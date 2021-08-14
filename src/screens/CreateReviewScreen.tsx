@@ -21,6 +21,7 @@ import { Review } from "../types/review";
 import { pickImage } from "../lib/imagePicker";
 import { getExtension } from "../utils/file";
 import { Loading } from "../components/Loading";
+import { ReviewsContext } from "../contexts/reviewsContext";
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "CreateReview">;
@@ -34,6 +35,7 @@ const CreateReviewScreen: React.FC<Props> = ({ navigation, route }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const { user } = useContext(UserContext);
   const [score, setScore] = useState<number>(3);
+  const { reviews, setReviews } = useContext(ReviewsContext);
 
   useEffect(() => {
     navigation.setOptions({
@@ -58,6 +60,7 @@ const CreateReviewScreen: React.FC<Props> = ({ navigation, route }) => {
     }
     const { id, name } = user!;
     const review = {
+      id: reviewDocRef.id,
       user: { id, name },
       shop: { id: shop.id, name: shop.name },
       text,
@@ -69,6 +72,7 @@ const CreateReviewScreen: React.FC<Props> = ({ navigation, route }) => {
     // addReviewの代わりにreviewDocRef.setを実行
     // await addReview(shop.id!, review);
     await reviewDocRef.set(review);
+    setReviews([review, ...reviews]);
 
     setLoading(false);
     navigation.goBack();
